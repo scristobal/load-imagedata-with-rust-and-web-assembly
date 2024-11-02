@@ -1,5 +1,5 @@
 [package]
-name = "load-image-bytes-with-rust-and-web-assembly-and-no-canvas"
+name = "png-decoder"
 version = "0.1.0"
 edition = "2021"
 

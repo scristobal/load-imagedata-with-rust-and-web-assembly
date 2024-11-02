@@ -1,13 +1,17 @@
-import init, { decode_img_from_arraybuffer, decode_img_from_url } from './pkg/load_image_bytes_with_rust_and_web_assembly_and_no_canvas.js'
+import init, { decode_img_from_url } from './pkg/png_decoder.js'
+import { PNG } from 'pngjs/browser'
 
 const NUM_IMAGES = 9;
 
-const functions = [getImageDataUsingWebAssembly, getImageDataUsingWebgl, getImageDataUsingOfflineCanvas, decode_img_from_url];
+const functions = [getImageDataUsingWebAssembly, getImageDataUsingWebgl, getImageDataUsingOfflineCanvas, getImageDataUsingPngjs];
 
 async function bench(fn, url) {
+
+	await init({})
+
 	let start = performance.now();
 
-	let res = await fn(url, start)
+	await fn(url, start)
 
 	const timeTaken = performance.now() - start;
 
@@ -26,7 +30,7 @@ async function run(functions, num_images) {
 		let totalTime = 0;
 
 		for (let i = 1; i <= num_images; i++) {
-			const url = `/images/${i}.png`
+			const url = `/${i}.png`
 			totalTime += await bench(_function, url)
 		}
 
@@ -37,23 +41,8 @@ async function run(functions, num_images) {
 
 run(functions, NUM_IMAGES);
 
-
-
-
 async function getImageDataUsingWebAssembly(url) {
-	const wasm = await init({});
-
-	const response = await fetch(url);
-
-	const blob = await response.blob();
-
-	const bitmap = await createImageBitmap(blob, { colorSpaceConversion: 'none' });
-
-	const arrayBuffer = await blob.arrayBuffer();
-
-	const data = await decode_img_from_arraybuffer(arrayBuffer);
-
-	return data
+	return await decode_img_from_url(url);
 }
 
 async function getImageDataUsingOfflineCanvas(url) {
@@ -116,5 +105,20 @@ async function getImageDataUsingWebgl(url) {
 	gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
 	return data
+}
+
+
+
+async function getImageDataUsingPngjs(url) {
+
+	const response = await fetch(url);
+
+	const blob = await response.blob();
+
+	const data = await blob.arrayBuffer();
+
+	const png = PNG.sync.read(data);
+
+	return png.data
 }
 

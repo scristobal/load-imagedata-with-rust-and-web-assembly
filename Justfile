@@ -1,17 +1,9 @@
+
+
+
 build *args: 
-	cd wasm && cargo build --target=wasm32-unknown-unknown {{ args }}
+	cd libs/png-decoder && cargo build --target=wasm32-unknown-unknown --release {{ args }}
 
 pack *args:
-	cd wasm &&  wasm-bindgen ./target/wasm32-unknown-unknown/release/load_image_bytes_with_rust_and_web_assembly_and_no_canvas.wasm {{ args }}
+	cd libs/png-decoder &&  wasm-bindgen ./target/wasm32-unknown-unknown/release/png_decoder.wasm --out-dir ../../src/pkg --target web {{ args }}
 
-pack-browser:
-	@just pack --out-dir ../browser/pkg --target web
-
-pack-nodejs:
-	@just pack --out-dir ../nodejs/pkg --target experimental-nodejs-module
-	
-run-browser:
-	cd browser && live-server
-
-run-nodejs: 
-	cd nodejs && node node.js
