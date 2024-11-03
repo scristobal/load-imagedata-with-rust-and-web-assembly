@@ -1,9 +1,11 @@
-import init, { decode_img_from_url } from './pkg/png_decoder.js'
-import { PNG } from 'pngjs/browser'
+import init, { decode_img_from_url } from '/pkg/png_decoder.js'
 
 const NUM_IMAGES = 9;
 
-const functions = [getImageDataUsingWebAssembly, getImageDataUsingWebgl, getImageDataUsingOfflineCanvas, getImageDataUsingPngjs];
+const functions = [getImageDataUsingWebAssembly, getImageDataUsingWebgl, getImageDataUsingOfflineCanvas];
+
+run(functions, NUM_IMAGES);
+
 
 async function bench(fn, url) {
 
@@ -30,7 +32,7 @@ async function run(functions, num_images) {
 		let totalTime = 0;
 
 		for (let i = 1; i <= num_images; i++) {
-			const url = `/${i}.png`
+			const url = `/images/${i}.png`
 			totalTime += await bench(_function, url)
 		}
 
@@ -39,7 +41,6 @@ async function run(functions, num_images) {
 	}
 }
 
-run(functions, NUM_IMAGES);
 
 async function getImageDataUsingWebAssembly(url) {
 	return await decode_img_from_url(url);
@@ -109,16 +110,4 @@ async function getImageDataUsingWebgl(url) {
 
 
 
-async function getImageDataUsingPngjs(url) {
-
-	const response = await fetch(url);
-
-	const blob = await response.blob();
-
-	const data = await blob.arrayBuffer();
-
-	const png = PNG.sync.read(data);
-
-	return png.data
-}
 

@@ -1,7 +1,7 @@
 target := wasm32-unknown-unknown
-lib_dir :=  libs/png-decoder
+lib_dir :=  png-decoder
 wasm_file :=  $(lib_dir)/target/$(target)/release/png_decoder.wasm
-out_dir := src/pkg
+out_dir := pkg
 
 pack: $(wasm_file)
 	wasm-bindgen $(wasm_file) --out-dir $(out_dir) --target web
