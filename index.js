@@ -19,7 +19,6 @@ async function bench(fn, url) {
 
 	const res = await fetch(url);
 
-
 	console.log(`  decode ${res.headers.get("content-length")} bytes took ${timeTaken.toFixed(3)} ms`)
 
 	return timeTaken
@@ -28,8 +27,10 @@ async function bench(fn, url) {
 
 async function run(functions, num_images) {
 
+	console.log(`Running on ${navigator.userAgent}\n`)
 
 	for (const _function of functions) {
+
 		console.log(`Benchmarking ${_function.name}`);
 
 		let totalTime = 0;

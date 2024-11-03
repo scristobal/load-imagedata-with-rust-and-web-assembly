@@ -3,39 +3,41 @@
 A quick experiment to get raw pixels of a PNG using Wasm from Rust __no canvas involved__, compared to the more mainstream [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) and [WebGL2 API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API) methods.
 
 ```
+Running on Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko/20100101 Firefox/133.0
+
 Benchmarking getImageDataUsingWebAssembly
-  decode 104327 bytes took 5.500 ms
-  decode 207071 bytes took 6.000 ms
-  decode 503111 bytes took 30.500 ms
-  decode 1068158 bytes took 28.100 ms
-  decode 3124201 bytes took 76.000 ms
-  decode 5249494 bytes took 81.100 ms
-  decode 10473459 bytes took 182.000 ms
-  decode 21141605 bytes took 367.200 ms
-  decode 32916531 bytes took 601.400 ms
-Total time for getImageDataUsingWebAssembly is 1377.800 ms
+  decode 104327 bytes took 3.000 ms
+  decode 207071 bytes took 4.000 ms
+  decode 503111 bytes took 9.000 ms
+  decode 1068158 bytes took 12.000 ms
+  decode 3124201 bytes took 49.000 ms
+  decode 5249494 bytes took 48.000 ms
+  decode 10473459 bytes took 127.000 ms
+  decode 21141605 bytes took 264.000 ms
+  decode 32916531 bytes took 410.000 ms
+Total time for getImageDataUsingWebAssembly is 926.000 ms
 
 Benchmarking getImageDataUsingWebgl
-  decode 104327 bytes took 10.100 ms
-  decode 207071 bytes took 14.300 ms
-  decode 503111 bytes took 18.900 ms
-  decode 1068158 bytes took 23.700 ms
-  decode 3124201 bytes took 65.100 ms
-  decode 5249494 bytes took 80.300 ms
-  decode 10473459 bytes took 144.300 ms
-  decode 21141605 bytes took 316.800 ms
-  decode 32916531 bytes took 470.200 ms
-Total time for getImageDataUsingWebgl is 1143.700 ms
+  decode 104327 bytes took 19.000 ms
+  decode 207071 bytes took 19.000 ms
+  decode 503111 bytes took 22.000 ms
+  decode 1068158 bytes took 28.000 ms
+  decode 3124201 bytes took 67.000 ms
+  decode 5249494 bytes took 78.000 ms
+  decode 10473459 bytes took 159.000 ms
+  decode 21141605 bytes took 314.000 ms
+  decode 32916531 bytes took 468.000 ms
+Total time for getImageDataUsingWebgl is 1174.000 ms
 
 Benchmarking getImageDataUsingOfflineCanvas
-  decode 104327 bytes took 7.200 ms
-  decode 207071 bytes took 6.900 ms
-  decode 503111 bytes took 12.200 ms
-  decode 1068158 bytes took 17.300 ms
-  decode 3124201 bytes took 63.300 ms
-  decode 5249494 bytes took 75.300 ms
-  decode 10473459 bytes took 131.400 ms
-  decode 21141605 bytes took 301.700 ms
-  decode 32916531 bytes took 474.300 ms
-Total time for getImageDataUsingOfflineCanvas is 1089.600 ms
+  decode 104327 bytes took 7.000 ms
+  decode 207071 bytes took 8.000 ms
+  decode 503111 bytes took 10.000 ms
+  decode 1068158 bytes took 15.000 ms
+  decode 3124201 bytes took 53.000 ms
+  decode 5249494 bytes took 58.000 ms
+  decode 10473459 bytes took 132.000 ms
+  decode 21141605 bytes took 274.000 ms
+  decode 32916531 bytes took 420.000 ms
+Total time for getImageDataUsingOfflineCanvas is 977.000 ms
 ```
