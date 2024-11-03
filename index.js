@@ -17,7 +17,10 @@ async function bench(fn, url) {
 
 	const timeTaken = performance.now() - start;
 
-	console.log(`  ${fn.name} ${url} ${timeTaken}`)
+	const res = await fetch(url);
+
+
+	console.log(`  decode ${res.headers.get("content-length")} bytes took ${timeTaken.toFixed(3)} ms`)
 
 	return timeTaken
 }
@@ -36,8 +39,7 @@ async function run(functions, num_images) {
 			totalTime += await bench(_function, url)
 		}
 
-
-		console.log(`Total time for ${_function.name} is ${totalTime}`)
+		console.log(`Total time for ${_function.name} is ${totalTime.toFixed(3)} ms\n`)
 	}
 }
 
