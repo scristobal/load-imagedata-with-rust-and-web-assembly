@@ -23,14 +23,14 @@ pub async fn decode_img_from_url(url: String) -> Result<Uint8ClampedArray, JsVal
         .await?
         .dyn_into::<ArrayBuffer>()?;
 
-    decode_img_from_arraybuffer(encoded).await
+    decode_img_from_arraybuffer(&encoded).await
 }
 
 #[wasm_bindgen]
 pub async fn decode_img_from_arraybuffer(
-    array_buffer: ArrayBuffer,
+    array_buffer: &ArrayBuffer,
 ) -> Result<Uint8ClampedArray, JsValue> {
-    let data = Uint8Array::new(&array_buffer);
+    let data = Uint8Array::new(array_buffer);
 
     let cursor_enc = Cursor::new(data.to_vec());
 
